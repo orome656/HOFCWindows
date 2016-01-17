@@ -30,6 +30,7 @@ namespace HOFCWindows
         public MainPage()
         {
             this.InitializeComponent();
+            MainFrame.Navigate(typeof(Accueil));
             Task download = DataDownloader.download<Actu>(ServerConstants.ACTUS_URL, null);
         }
 
@@ -40,12 +41,12 @@ namespace HOFCWindows
 
         private void MenuButtonActu_Click(object sender, RoutedEventArgs e)
         {
-            
+            MainFrame.Navigate(typeof(Accueil));
         }
 
         private void MenuButtonCalendar_Click(object sender, RoutedEventArgs e)
         {
-            
+            MainFrame.Navigate(typeof(Views.Calendrier));
         }
     }
 }
