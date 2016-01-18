@@ -18,7 +18,7 @@
                 <DataTemplate x:DataType="models:Actu">
                     <StackPanel>
                         <TextBox Text="{x:Bind Titre}"/>
-                        <Image Source="{x:Bind ImageURL, Converter={StaticResource UriConverter}}"/>
+                        <Image Height="Auto" Width="Auto" MaxHeight="150" MaxWidth="150" Source="{x:Bind ImageURL, Converter={StaticResource UriConverter}}"/>
                         <TextBox Text="{x:Bind Texte}"/>
                         <TextBox Text="{x:Bind Date, Converter={StaticResource StringConverter}, ConverterParameter=\{0:d\}}"/>
                     </StackPanel>
