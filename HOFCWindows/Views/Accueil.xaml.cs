@@ -1,10 +1,16 @@
-﻿using System;
+﻿using HOFCWindows.Constants;
+using HOFCWindows.Data;
+using HOFCWindows.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +28,39 @@ namespace HOFCWindows.Views
     /// </summary>
     public sealed partial class Accueil : Page
     {
+        
+        private ObservableCollection<Actu> actusObservable = new ObservableCollection<Actu>(); 
+        public ObservableCollection<Actu> Actus { get { return this.actusObservable;  } }
+        private CoreDispatcher dispatcher;
+
         public Accueil()
         {
             this.InitializeComponent();
+            Task download = DataDownloader.download<Actu>(ServerConstants.ACTUS_URL, null);
+            download.ContinueWith(result => downloadDone((Task<List<Actu>>)result));
+        }
+
+        /// <summary>
+        /// When activating the scenario, ensure we have permission from the user to access their microphone, and
+        /// provide an appropriate path for the user to enable access to the microphone if they haven't
+        /// given explicit permission for it.
+        /// </summary>
+        /// <param name="e">The navigation event details</param>
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+        }
+
+        private async void downloadDone(Task<List<Actu>> result)
+        {
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+             {
+                 foreach (Actu actu in result.Result)
+                 {
+                     actusObservable.Add(actu);
+                 }
+             });
+
         }
     }
 }

@@ -31,7 +31,6 @@ namespace HOFCWindows
         {
             this.InitializeComponent();
             MainFrame.Navigate(typeof(Accueil));
-            Task download = DataDownloader.download<Actu>(ServerConstants.ACTUS_URL, null);
         }
 
         private void MenuButtonHamburger_Click(object sender, RoutedEventArgs e)
