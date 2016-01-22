@@ -54,12 +54,30 @@ namespace HOFCWindows.Views
         private async void downloadDone(Task<List<Actu>> result)
         {
             await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-             {
-                 foreach (Actu actu in result.Result)
-                 {
-                     actusObservable.Add(actu);
-                 }
-             });
+            {
+                List<Actu> actus = result.Result;
+                using (BddContext bddContext = new BddContext())
+                {
+                    foreach (Actu actu in actus)
+                    {
+                        if (bddContext.Actus.Any(item => actu.PostId == item.PostId))
+                        {
+                            Actu actuBdd = bddContext.Actus.First(item => actu.PostId == item.PostId);
+                            actuBdd.Texte = actu.Texte;
+                            actuBdd.Titre = actu.Titre;
+                            actuBdd.URL = actu.URL;
+                            actuBdd.ImageURL = actu.ImageURL;
+                            bddContext.Entry(actuBdd).State = Microsoft.Data.Entity.EntityState.Modified;
+                        }
+                        else
+                        {
+                            bddContext.Actus.Add(actu);
+                        }
+                        actusObservable.Add(actu);
+                    }
+                    bddContext.SaveChanges();
+                }
+            });
 
         }
     }

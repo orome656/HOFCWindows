@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants\ServerConstants.cs" />
+    <Compile Include="Converters\HOFCToVisibleConverter.cs" />
     <Compile Include="Converters\StringConverter.cs" />
     <Compile Include="Data\DataDownloader.cs" />
     <Compile Include="MainPage.xaml.cs">

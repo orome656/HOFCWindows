@@ -3,11 +3,35 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:HOFCWindows.Views"
+    xmlns:models="using:HOFCWindows.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:HOFCWindows.Converters"
     mc:Ignorable="d">
 
-    <Grid Background="LightYellow">
-        <TextBlock FontSize="36" Text="Calendrier" Margin="12,17,0,17"/>
+    <Page.Resources>
+        <c:HOFCToVisibleConverter x:Key="HOFCToVisibleConverter"/>
+    </Page.Resources>
+    
+    <Grid>
+        <GridView ItemsSource="{x:Bind Matchs}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:Calendrier">
+                    <StackPanel Width="Auto" Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/Assets/StoreLogo.png" Visibility="{x:Bind Equipe1, Converter={StaticResource HOFCToVisibleConverter}}"></Image>
+                            <TextBlock Width="Auto" Text="{x:Bind Equipe1}"/>
+                        </StackPanel>
+                        <TextBlock Width="Auto" Text="{x:Bind Score1}"/>
+                        <TextBlock Width="Auto" Text="-"/>
+                        <TextBlock Width="Auto" Text="{x:Bind Score2}"/>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/Assets/StoreLogo.png" Visibility="{x:Bind Equipe2, Converter={StaticResource HOFCToVisibleConverter}}"></Image>
+                            <TextBlock Width="Auto" Text="{x:Bind Equipe2}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>

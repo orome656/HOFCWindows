@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HOFCWindows.Models
 {
-    class Calendrier: IModel
+    public class Calendrier: IModel
     {
         [Key]
         public int Id { get; set; }
