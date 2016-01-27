@@ -1,6 +1,7 @@
 ﻿using HOFCWindows.Constants;
 using HOFCWindows.Data;
 using HOFCWindows.Models;
+using HOFCWindows.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,56 +30,12 @@ namespace HOFCWindows.Views
     public sealed partial class Accueil : Page
     {
         
-        private ObservableCollection<Actu> actusObservable = new ObservableCollection<Actu>(); 
-        public ObservableCollection<Actu> Actus { get { return this.actusObservable;  } }
         private CoreDispatcher dispatcher;
-
+        public ActuViewModel ActuVM;
         public Accueil()
         {
             this.InitializeComponent();
-            Task download = DataDownloader.download<Actu>(ServerConstants.ACTUS_URL, null);
-            download.ContinueWith(result => downloadDone((Task<List<Actu>>)result));
-        }
-
-        /// <summary>
-        /// When activating the scenario, ensure we have permission from the user to access their microphone, and
-        /// provide an appropriate path for the user to enable access to the microphone if they haven't
-        /// given explicit permission for it.
-        /// </summary>
-        /// <param name="e">The navigation event details</param>
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-        }
-
-        private async void downloadDone(Task<List<Actu>> result)
-        {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                List<Actu> actus = result.Result;
-                using (BddContext bddContext = new BddContext())
-                {
-                    foreach (Actu actu in actus)
-                    {
-                        if (bddContext.Actus.Any(item => actu.PostId == item.PostId))
-                        {
-                            Actu actuBdd = bddContext.Actus.First(item => actu.PostId == item.PostId);
-                            actuBdd.Texte = actu.Texte;
-                            actuBdd.Titre = actu.Titre;
-                            actuBdd.URL = actu.URL;
-                            actuBdd.ImageURL = actu.ImageURL;
-                            bddContext.Entry(actuBdd).State = Microsoft.Data.Entity.EntityState.Modified;
-                        }
-                        else
-                        {
-                            bddContext.Actus.Add(actu);
-                        }
-                        actusObservable.Add(actu);
-                    }
-                    bddContext.SaveChanges();
-                }
-            });
-
+            ActuVM = new ActuViewModel();
         }
     }
 }

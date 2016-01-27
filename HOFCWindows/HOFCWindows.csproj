@@ -98,7 +98,9 @@
     <Compile Include="Constants\ServerConstants.cs" />
     <Compile Include="Converters\HOFCToVisibleConverter.cs" />
     <Compile Include="Converters\StringConverter.cs" />
+    <Compile Include="Data\CacheManager.cs" />
     <Compile Include="Data\DataDownloader.cs" />
+    <Compile Include="Data\DownloadService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -114,6 +116,7 @@
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Converters\UriConverter.cs" />
+    <Compile Include="ViewModels\ActuViewModel.cs" />
     <Compile Include="Views\Accueil.xaml.cs">
       <DependentUpon>Accueil.xaml</DependentUpon>
     </Compile>

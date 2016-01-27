@@ -1,4 +1,5 @@
 ﻿using HOFCWindows.Models;
+using HOFCWindows.Views;
 using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
@@ -54,16 +55,16 @@ namespace HOFCWindows
             }
 #endif
 
-            Frame rootFrame = Window.Current.Content as Frame;
+            MainPage rootFrame = Window.Current.Content as MainPage;
 
             // Ne répétez pas l'initialisation de l'application lorsque la fenêtre comporte déjà du contenu,
             // assurez-vous juste que la fenêtre est active
             if (rootFrame == null)
             {
                 // Créez un Frame utilisable comme contexte de navigation et naviguez jusqu'à la première page
-                rootFrame = new Frame();
+                rootFrame = new MainPage();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+                rootFrame.AppFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -79,7 +80,7 @@ namespace HOFCWindows
                 // Quand la pile de navigation n'est pas restaurée, accédez à la première page,
                 // puis configurez la nouvelle page en transmettant les informations requises en tant que
                 // paramètre
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                rootFrame.AppFrame.Navigate(typeof(Accueil), e.Arguments);
             }
             // Vérifiez que la fenêtre actuelle est active
             Window.Current.Activate();

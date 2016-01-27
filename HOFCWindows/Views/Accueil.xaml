@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:HOFCWindows.Views"
     xmlns:models="using:HOFCWindows.Models"
+    xmlns:vm="using:HOFCWindows.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:c="using:HOFCWindows.Converters"
@@ -13,7 +14,7 @@
         <c:StringConverter x:Key="StringConverter"/>
     </Page.Resources>
     <Grid>
-        <GridView ItemsSource="{x:Bind Actus}">
+        <GridView ItemsSource="{x:Bind ActuVM.ActusList}">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:Actu">
                     <StackPanel Width="Auto">

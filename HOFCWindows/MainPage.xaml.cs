@@ -27,6 +27,7 @@ namespace HOFCWindows
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public Frame AppFrame { get { return this.MainFrame; } }
         public MainPage()
         {
             this.InitializeComponent();
